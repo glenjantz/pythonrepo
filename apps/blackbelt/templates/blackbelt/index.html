@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>login and registration</title>
+      {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'blackbelt/css/skeleton.css' %}">
+    <link rel="stylesheet" href="{% static 'blackbelt/css/normalize.css' %}">
+  </head>
+  <body>
+    <div class="container">
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <h1>Registration</h1>
+      <form action="/register" method="post">
+        {% csrf_token %}
+        <div class="row">
+          <label class="three columns" for="firstname">First Name:</label>
+          <input class="four columns" type="text" name="firstname"><br />
+        </div>
+        <div class="row">
+          <label class="three columns" for="lastname">Last Name:</label>
+          <input class="four columns" type="text" name="lastname"><br />
+        </div>
+        <div class="row">
+          <label class="three columns" for="email">Email:</label>
+          <input class="four columns" type="text" name="email"><br />
+        </div>
+        <div class="row">
+          <label class="three columns" for="password">Password:</label>
+          <input class="four columns" type="password" name="password"><br />
+        </div>
+        <div class="row">
+          <label class="three columns"for="passc">Confirm pw:</label>
+          <input class="four columns" type="password" name="passc"><br />
+        </div>
+        <input class="button-primary" type="submit" value="Register">
+      </form><br /><br  />
+      <form action="/login" method="post">
+        {% csrf_token %}
+        <div class="row">
+          <label class="three columns" for="email">Email:</label>
+          <input class="four columns" type="text" name="email"><br />
+        </div>
+        <div class="row">
+          <label class="three columns" for="password">Password:</label>
+          <input class="four columns" type="password" name="password"><br />
+        </div>
+
+        <input class="button-primary" type="submit" value="Log in">
+      </form>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Successful Registration</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'blackbelt/css/skeleton.css' %}">
+    <link rel="stylesheet" href="{% static 'blackbelt/css/normalize.css' %}">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Success! Welcome, {{loggeduser.first_name}}</h1>
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <p>First Name: {{loggeduser.first_name}}</p>
+      <p>Last Name: {{loggeduser.last_name}}</p>
+      <p>Email: {{loggeduser.email}}</p>
+      <p>Created At: {{loggeduser.created_at}}</p>
+      <p>Created At: {{loggeduser.id}}</p><br />
+      <h1>Warning! Clicking delete user will permanently delete your account.</h1>
+      <form action="/delete/{{loggeduser.id}}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Delete User">
+      </form>
+      <br />
+      <form action="/logout" method="post">
+        {% csrf_token %}
+        <input type="submit" value="log out">
+      </form>
+    </div>
+  </body>
+</html>
