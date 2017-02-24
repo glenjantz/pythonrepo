@@ -17,11 +17,62 @@
         {% endfor %}
       </ul>
       {% endif %}
-      <p>First Name: {{loggeduser.first_name}}</p>
-      <p>Last Name: {{loggeduser.last_name}}</p>
-      <p>Email: {{loggeduser.email}}</p>
-      <p>Created At: {{loggeduser.created_at}}</p>
-      <p>Created At: {{loggeduser.id}}</p><br />
+      <form action="/addtravel">
+        {% csrf_token %}
+        <input type="submit" name="travel" value="add travel plans">
+      </form>
+      <h2>Your scheduled trips</h2>
+      <table>
+        <tr>
+          <th>Destination</th>
+          <th>Start date</th>
+          <th>End date</th>
+          <th>Description</th>
+        </tr>
+        {% for trip in trips %}
+        <tr>
+          <td><a href="/destination/{{trip.id}}">{{trip.destination}}</a></td>
+          <td>{{trip.dateto}}          </td>
+          <td>{{trip.datefrom}}</td>
+          <td>{{trip.description}}</td>
+        </tr>
+        {% endfor %}
+
+      </table>
+
+      <h2>Other users trips</h2>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Destination</th>
+          <th>Start date</th>
+          <th>End date</th>
+          <th>Description</th>
+        </tr>
+        {% for trip in othertrips %}
+        {% if trip.creator.id != request.session.userid %}
+        <tr>
+          <td>{{trip.creator.first_name}}</td>
+          <td><a href="/destination/{{trip.id}}">{{trip.destination}}</a></td>
+          <td>{{trip.dateto}}</td>
+          <td>{{trip.datefrom}}</td>
+          <td>{{trip.description}}</td>
+          {% endif %}
+          {% if loggeduser in trip.join.all %}
+          <p>You joined this trip!</p>
+          {% elif trip.creator.id != request.session.userid %}
+          <td><form action="/jointrip/{{trip.id}}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="join trip">
+          </form></td>
+        </tr>
+
+        {% endif %}
+        {% endfor %}
+
+      </table>
+
+
       <h1>Warning! Clicking delete user will permanently delete your account.</h1>
       <form action="/delete/{{loggeduser.id}}" method="post">
         {% csrf_token %}

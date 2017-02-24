@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>add a trip</title>
+  </head>
+  <body>
+    <h1>hey</h1>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="/addtrip" method="post">
+      {% csrf_token %}
+      <label for="destination">Destination:</label>
+      <input type="text" name="destination"><br />
+      <label for="description">Description:</label>
+      <input type="text" name="description"><br />
+      <label for="start">Start date:</label>
+      <input type="text" name="start"><br />
+      <label for="end">End date:</label>
+      <input type="text" name="end"><br />
+      <input type="submit" value="addtrip">
+    </form>
+  </body>
+</html>

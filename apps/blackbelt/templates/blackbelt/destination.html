@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>hello</title>
+  </head>
+  <body>
+    <h1>hey</h1>
+    <form action="/logout" method="post">
+      {% csrf_token %}
+      <input type="submit" value="log out">
+    </form>
+    <form action="/success" method="post">
+      {% csrf_token %}
+      <input type="submit" value="home">
+    </form>
+    {% for thistrip in trip %}
+    <h2>{{thistrip.destination}}<br /></h2>
+    <p>Planned by: {{thistrip.creator.first_name}} {{thistrip.creator.last_name}}<br /></p>
+    <p>Description: {{thistrip.description}}</p> <br />
+    <p>Travel date from:{{thistrip.dateto}}</p><br />
+    <p>Travel date to: {{thistrip.datefrom}}</p><br />
+    {% endfor %}
+
+
+    <h1>Other user's joining the trip: </h1>
+    {% for blah in trip %}
+    {{blah.join__first_name}}
+    {% endfor %}
+  </body>
+</html>
