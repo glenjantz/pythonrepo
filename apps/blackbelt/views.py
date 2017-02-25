@@ -91,7 +91,9 @@ def destination(request, id):
     if 'userid' not in request.session:
         messages.error(request, 'Nice try, log in or register.')
         return  redirect('/')
-    context = {'trip': Trip.Tripmanager.filter(id=id)}
+    trip = Trip.Tripmanager.get(id=id)
+    # members = Trip.join.all()
+    context = {'trip': Trip.Tripmanager.get(id=id), }
     return render(request, 'blackbelt/destination.html', context)
 
 def jointrip(request, tripid):

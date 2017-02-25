@@ -14,18 +14,17 @@
       {% csrf_token %}
       <input type="submit" value="home">
     </form>
-    {% for thistrip in trip %}
-    <h2>{{thistrip.destination}}<br /></h2>
-    <p>Planned by: {{thistrip.creator.first_name}} {{thistrip.creator.last_name}}<br /></p>
-    <p>Description: {{thistrip.description}}</p> <br />
-    <p>Travel date from:{{thistrip.dateto}}</p><br />
-    <p>Travel date to: {{thistrip.datefrom}}</p><br />
-    {% endfor %}
-
+    <h2>{{trip.destination}}<br /></h2>
+    <p>Planned by: {{trip.creator.first_name}} {{trip.creator.last_name}}<br /></p>
+    <p>Description: {{trip.description}}</p> <br />
+    <p>Travel date from:{{trip.dateto}}</p><br />
+    <p>Travel date to: {{trip.datefrom}}</p><br />
 
     <h1>Other user's joining the trip: </h1>
-    {% for blah in trip %}
-    {{blah.join__first_name}}
+    {% for member in trip.join.all %}
+    <p>
+      {{member.first_name}}
+    </p>
     {% endfor %}
   </body>
 </html>
