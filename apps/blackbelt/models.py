@@ -5,6 +5,7 @@ import bcrypt
 import datetime
 Email_Regex = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 Name_Regex = re.compile(r'^[A-Za-z]+$')
+#Date_Regex = re.compile(r'^{1,12}$)
 
 
 class UserManager(models.Manager):
@@ -86,19 +87,32 @@ class TripManager(models.Manager):
         if len(postdesc) < 1:
             errorlist.append('Description must be filled in.')
             status = False
+        if len(postdatef) <1:
+            errorlist.append('date cant be blank')
+            status = False
+        if len(postdatet) <1:
+            errorlist.append('date cant be b;ank')
+            status = False
         try:
-            startdate = datetime.datetime.strptime(postdatef,'%m/%d/%Y')
-            enddate = datetime.datetime.strptime(postdatet,'%m/%d/%Y')
-            if startdate < datetime.datetime.now():
+            print postdatet
+            print postdatef
+            # startdate = datetime.datetime.strptime(postdatef,'%m/%d/%Y')
+            # enddate = datetime.datetime.strptime(postdatet,'%m/%d/%Y')
+            # startdate = datetime.datetime.strptime(postdatef,'%Y/%m/%d')
+            # enddate = datetime.datetime.strptime(postdatet,'%Y/%m/%d')
+            if postdatef < str(datetime.datetime.today()).split()[0]:
                 errorlist.append("startdate must be start in the future")
                 status = False
-            elif startdate > enddate:
+            elif postdatet < postdatef:
                 errorlist.append('end date must be after start date')
                 status = False
-        except Exception,e:
-            #Exception,e
+        except:
             errorlist.append('The dates entered are invalid. Must be in MM/DD/YYYY format.')
-            status = False
+            status == False
+        # except Exception,e:
+        #     #Exception,e
+        #     errorlist.append('The dates entered are invalid. Must be in MM/DD/YYYY format.')
+        #     status = False
         if status == False:
             return {'errors': errorlist}
         else:
@@ -115,8 +129,8 @@ class Trip(models.Model):
     destination = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     creator = models.ForeignKey(User)
-    datefrom = models.CharField(max_length=255)
-    dateto = models.CharField(max_length=255)
+    datefrom = models.DateField(max_length=255)
+    dateto = models.DateField(max_length=255)
     join = models.ManyToManyField(User, related_name = "userjoin")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -6,10 +6,6 @@
   </head>
   <body>
     <h1>hey</h1>
-    <form action="/logout" method="post">
-      {% csrf_token %}
-      <input type="submit" value="log out">
-    </form>
     <form action="/success" method="post">
       {% csrf_token %}
       <input type="submit" value="home">
@@ -26,5 +22,11 @@
       {{member.first_name}}
     </p>
     {% endfor %}
+
+    <form action="/logout" method="post">
+      {% csrf_token %}
+      <input type="submit" value="log out">
+    </form>
+
   </body>
 </html>

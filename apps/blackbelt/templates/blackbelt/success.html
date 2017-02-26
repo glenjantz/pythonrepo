@@ -33,11 +33,20 @@
         <tr>
           <td><a href="/destination/{{trip.id}}">{{trip.destination}}</a></td>
           <td>{{trip.datefrom}}</td>
-          <td>{{trip.dateto}}          </td>
+          <td>{{trip.dateto}} </td>
           <td>{{trip.description}}</td>
         </tr>
         {% endfor %}
-
+        {% for trip in othertrips %}
+        {% if loggeduser in trip.join.all  %}
+        <tr>
+          <td><a href="/destination/{{trip.id}}">{{trip.destination}}</a></td>
+          <td>{{trip.datefrom}}</td>
+          <td>{{trip.dateto}} </td>
+          <td>{{trip.description}}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
       </table>
 
       <h2>Other users trips</h2>
@@ -50,17 +59,14 @@
           <th>Description</th>
         </tr>
         {% for trip in othertrips %}
-        {% if trip.creator.id != request.session.userid %}
+        {% if loggeduser in trip.join.all %}
+        {% elif trip.creator.id != request.session.userid %}
         <tr>
           <td>{{trip.creator.first_name}}</td>
           <td><a href="/destination/{{trip.id}}">{{trip.destination}}</a></td>
           <td>{{trip.dateto}}</td>
           <td>{{trip.datefrom}}</td>
           <td>{{trip.description}}</td>
-          {% endif %}
-          {% if loggeduser in trip.join.all %}
-          <p>You joined this trip!</p>
-          {% elif trip.creator.id != request.session.userid %}
           <td><form action="/jointrip/{{trip.id}}" method="post">
             {% csrf_token %}
             <input type="submit" value="join trip">

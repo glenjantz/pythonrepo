@@ -6,6 +6,16 @@
   </head>
   <body>
     <h1>hey</h1>
+    <form action="/success" method="post">
+      {% csrf_token %}
+      <input type="submit" value="home">
+    </form>
+    <form action="/logout" method="post">
+      {% csrf_token %}
+      <input type="submit" value="log out">
+    </form>
+
+
     {% if messages %}
     <ul class="messages">
       {% for message in messages %}
@@ -20,9 +30,9 @@
       <label for="description">Description:</label>
       <input type="text" name="description"><br />
       <label for="start">Start date:</label>
-      <input type="text" name="start"><br />
+      <input type="date" name="start"><br />
       <label for="end">End date:</label>
-      <input type="text" name="end"><br />
+      <input type="date" name="end"><br />
       <input type="submit" value="addtrip">
     </form>
   </body>

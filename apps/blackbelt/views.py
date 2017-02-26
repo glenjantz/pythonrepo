@@ -108,3 +108,4 @@ def jointrip(request, tripid):
 def any(request):
     messages.error(request, 'Nice try.')
     return redirect('/')
+#{% elif trip.creator.id != request.session.userid %}
